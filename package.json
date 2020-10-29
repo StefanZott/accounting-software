@@ -1,0 +1,24 @@
+{
+  "name": "accountant-software",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StefanZott/accounting-software.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StefanZott/accounting-software/issues"
+  },
+  "homepage": "https://github.com/StefanZott/accounting-software#readme",
+  "dependencies": {
+    "electron": "^10.1.5"
+  }
+}
