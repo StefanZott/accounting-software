@@ -2,7 +2,7 @@
   "name": "accountant-software",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron ."
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/StefanZott/accounting-software#readme",
   "dependencies": {
-    "electron": "^10.1.5"
+    "electron": "^10.1.5",
+    "jquery": "^3.5.1"
   }
 }
