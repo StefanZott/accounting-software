@@ -1,0 +1,31 @@
+html, body {
+    height: 98%;
+}
+
+
+/* Scrollbar deaktivieren */
+::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    background-color: black;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: blue;
+    justify-content: center;
+    align-items: center;
+    overflow-y: hidden;
+}
+
+#root input {
+    height: 25px;
+    margin-bottom: 5px;
+    border: 2px solid blue;
+    border-radius: 25px;
+    text-align: center;
+}
