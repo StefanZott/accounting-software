@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'"/>
+    <link rel="stylesheet" href="../css/registration.css">
+    <title>Hauptfenster</title>
+</head>
+<body>
+    <div id="root">
+        <header>Willkommen bei der Registrierung</header>
+            <div id="personalData">
+            <input id="firstname" type="text" placeholder="Vorname"> 
+            <input id="lastname" type="text" placeholder="Nachname"> 
+            <input id="street" type="text" placeholder="Straße Hausnummer"> 
+            <input id="postcode" type="number" placeholder="PLZ"> 
+            <input id="place" type="text" placeholder="Ort"> 
+            <input id="phonenumber" type="number" placeholder="Telefonnummer"> 
+            <input id="email" type="email" placeholder="Email">
+            </div>
+            <div id="loginData">
+                <input id="username" type="text" placeholder="Benutzername">
+                <input id="password" type="password" placeholder="Passwort">
+            </div>
+            <div id="buttonContainer">
+                <button id="registrationBtn">Registrieren</button>
+                <button id="returnLoginBtn">zurück zum Login</button>
+            </div>
+    </div>
+
+    <script src="../javascript/registration.js"></script>
+</body>
+</html>

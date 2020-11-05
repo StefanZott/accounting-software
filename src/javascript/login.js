@@ -1,7 +1,9 @@
 const electron = require('electron');
 const {dialog} = require('electron').remote;
+const BrowserWindow = electron.remote.BrowserWindow;
 const $ = require('jquery');
 const remote = electron.remote;
+
 
 //Dummy User
 let login = {
@@ -42,6 +44,31 @@ $('#cancelBtn').on('click', () => {
 
     mainWindow.close();
     loginWindow.close();
+})
+
+//Funktion wird bei Registrationsbutton ausgeführt
+$('#registrationBtn').on('click', () => {
+    
+    const registrationWindow = new BrowserWindow({
+        width: 400,
+        height: 600,
+        // Gibt dem Window permanenten Focus
+        modal: true,
+        // Damit wird die Titlebar ausgeblendet
+        frame: false,
+        webPreferences: {
+          // Aktiviert die Fähigkeit Node.js für diesen BrowserWindow. Default: false
+          nodeIntegration: true,
+          // Erlaubt die Kommunikation zwischen dem renderer process und main process. Default: false
+          enableRemoteModule: true
+        }
+      })  
+    
+      // Wird die Standard Menüleiste von Electron ausgeblendet
+      registrationWindow.setMenu(null);
+      registrationWindow.loadFile('./src/html/registration.html');
+
+
 })
 
 /* 

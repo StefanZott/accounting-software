@@ -1,0 +1,40 @@
+html, body {
+    height: 98%;
+    background-color: black;
+    font-family: arial;
+    overflow-y: hidden;
+}
+
+header{
+    color: white;
+    font-weight: bold;
+}
+
+#root{
+    text-align: center;
+    
+}
+
+input{
+    display: block;
+    margin-left: 28%;
+    margin-top: 3%;
+    border: 2px solid blue;
+    border-radius: 25px;
+    text-align: center;
+}
+
+div{
+   margin-top: 10%;
+   text-align: center; 
+   display: block;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+
+
