@@ -3,11 +3,8 @@ const {dialog} = require('electron').remote;
 const $ = require('jquery');
 const remote = electron.remote;
 
-//Dummy User
-let login = {
-    username: 'Admin',
-    password: 'admin'
-}
+//Datenbank Import
+const database = require('../database/db');
 
 // die Funktion wird aufgerufen wenn der Button Login gedrückt wird.
 // Die Funktion überprüft, ob der Eingaben von den Input Fields username und password
@@ -20,17 +17,26 @@ $('#loginBtn').on('click', () => {
     let username = $('#username').val();
     let password = $('#password').val();
 
-    if (login.username === username) {
-        if (login.password === password) {
-            alert('Willkommen ' + username);
-            mainWindow.show();
-            loginWindow.close();
+    // Check vergleicht die Daten von den Input Fields mit den Daten aus der Datenbank.
+    // Wichtig:
+    // Die Funktion Check muss asynchron sein, weil die Funktion auf die Daten von der Datenbank
+    // warten muss. Daher muss mit Aysnc/await gearbeitet werden.
+    async function check() {
+        // Wichtig: Vor database.checkLogin() muss ein await stehen, weil die Daten benötigt werden
+        let users = await database.checkLogin();
+        if (username === users.username ) {
+            if (password === users.password) {
+                mainWindow.show();
+                loginWindow.close();
+            } else {
+                dialog.showErrorBox('Login' , 'Das Passwort ist falsch');    
+            }
         } else {
-            dialog.showErrorBox('ERROR' , 'Falsches Passwort!')
+            dialog.showErrorBox('Login' , 'Der Benutzername ist falsch');
         }
-    } else {
-        dialog.showErrorBox('ERROR' , 'Falscher Benutzername!')
     }
+
+    check();
 })
 
 // die Funktion wird aufgerufen wenn der Button Cancel gedrückt wird.
@@ -43,11 +49,3 @@ $('#cancelBtn').on('click', () => {
     mainWindow.close();
     loginWindow.close();
 })
-
-/* 
-// Alternative zu JQuery
-
-const loginBtn = document.getElementById('loginBtn');
-loginBtn.addEventListener('click', () => {
-        
-})  */
