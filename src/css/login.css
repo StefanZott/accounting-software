@@ -29,3 +29,18 @@ body {
     border-radius: 25px;
     text-align: center;
 }
+
+#registrationBtn {
+    color : white;
+    font-family: arial;
+    font-size: 0.8em;
+    cursor: pointer;
+    position: fixed; 
+    left: 250px;
+    bottom: 10px; 
+    width: 100%
+}
+
+#registrationBtn:hover {
+    color:  blue;
+}

@@ -1,5 +1,6 @@
 const electron = require('electron');
 const {dialog} = require('electron').remote;
+const BrowserWindow = electron.remote.BrowserWindow;
 const $ = require('jquery');
 const remote = electron.remote;
 
