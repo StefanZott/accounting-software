@@ -39,7 +39,6 @@ function createWindows() {
   // Wird die Standard Menüleiste von Electron ausgeblendet
   loginWindow.setMenu(null);
   loginWindow.loadFile('./src/html/login.html');
-
 }
 
 app.whenReady().then(createWindows)
