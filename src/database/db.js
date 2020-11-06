@@ -1,4 +1,6 @@
-const { dialog } = require('electron');
+const electron = require('electron');
+const remote = electron.remote;
+const dialog = remote.dialog;
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
@@ -18,20 +20,37 @@ async function checkLogin() {
     await new Promise((resolve,reject) => {
         connection.connect();
         connection.query('SELECT * FROM loginData', (error,results,fields) => {
-            if(error) throw error;
-                resolve(results[0]);
-            })
+            (error) ? dialog.showMessageBox({message: error.message, title: 'Datenbank', type: 'error'}) : null;
+            resolve(results[0]);       
+        })
         connection.end();
     }).then(user => {
         users = user
         }
     ).catch(error => {
-        dialog.showErrorBox('Datenbank' , error)
+        dialog.showMessageBox({message: error, title: 'Datenbank', type: 'error'})
     })
 
     return await users;
 }
 
+async function addUserInDB(user) {
+    connection.connect();
+
+    connection.query('SELECT * FROM loginData' , (err , results, fields) => {
+        for (let index = 0; index < results.length; index++) {
+            if (results[index]['username'] === user.username) {
+                dialog.showMessageBox({message: 'Benutzername schon vergeben', title: '', type: 'info'})
+            } else {
+                dialog.showMessageBox({message: 'Sie wurden erfolgreich angelegt', title: '', type: 'info'})
+            }
+        }
+    })
+
+    connection.end();
+}
+
 module.exports={
-    checkLogin
+    checkLogin,
+    addUserInDB
 }
