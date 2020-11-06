@@ -1,7 +1,9 @@
 const electron = require('electron');
-const {dialog} = require('electron').remote;
-const $ = require('jquery');
 const remote = electron.remote;
+const dialog = remote.dialog;
+const $ = require('jquery');
+
+const database = require('../database/db');
 
 let messageDialog;
 
@@ -33,10 +35,12 @@ $('#registrationBtn').on('click', () => {
     
     //Anzeige der Messagebox
     if (messageDialog) {
-        dialog.showMessageBox({message : 'Daten wurden übertragen'});
+        dialog.showMessageBox({message: 'Daten wurden übertragen', title: 'Info', type: 'info'})
     } else {
-        dialog.showErrorBox('Error', 'fehlende Eingabe');
+        dialog.showMessageBox({message: 'fehlende Eingabe', title: 'Info', type: 'info'})
     }
+
+    database.addUserInDB(registrationData);
 
 });
 

@@ -69,6 +69,7 @@ $('#registrationBtn').on('click', () => {
     
       // Wird die Standard Menüleiste von Electron ausgeblendet
       registrationWindow.setMenu(null);
+      registrationWindow.webContents.openDevTools()
       registrationWindow.loadFile('./src/html/registration.html');
  
 })
