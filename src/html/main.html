@@ -3,17 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" content="script-src 'self'"/>
+    <link rel="stylesheet" href="../css/main.css">
     <title>Hauptfenster</title>
 </head>
 <body>
     <div id="root">
-        <label>Willkommen im Hauptfenster</label>
-        <button id="normal">Normal</button>
-        <button id="main2">Main2</button>
+        <div id="wrapper">
+            <div id="navigation">
+                <button id="overview"><span>Überblick</span></button>
+                <button id="content1"><span>Content 1</span></button>
+                <button id="content2"><span>Content 2</span></button>
+                <button id="content3"><span>Content 3</span></button>
+                <button id="content4"><span>Content 4</span></button>
+            </div>
+            <div id="contentContainer">
+                <div id="content">
+                   <div>Willkommen in der Accounting-Software</div> 
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div id="username">Benutzername: </div>
+            <div id="name">King</div>
+            <div id="dataConnection"></div>
+        </footer>
+        
     </div>
-    <div id="contentContainer">
+    
 
-    </div>
+  
     <script src="../javascript/main.js"></script>
 </body>
 </html>
