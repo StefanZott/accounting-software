@@ -2,7 +2,6 @@ const { win, BrowserWindow, app, screen } = require('electron');
 const path = require('path');
 const { electron } = require('process');
 
-
 function createWindows() {
   const mainWindow = new BrowserWindow({
     width: screen.getPrimaryDisplay().size.width,
@@ -42,7 +41,8 @@ function createWindows() {
   loginWindow.loadFile('./src/html/login.html');
 }
 
-app.whenReady().then(createWindows)
+app.whenReady()
+.then(createWindows)
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

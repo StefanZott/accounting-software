@@ -22,7 +22,7 @@ $('#loginBtn').on('click', () => {
     // Wichtig:
     // Die Funktion Check muss asynchron sein, weil die Funktion auf die Daten von der Datenbank
     // warten muss. Daher muss mit Aysnc/await gearbeitet werden.
-    async function check() {
+    /* async function check() {
         // Wichtig: Vor database.checkLogin() muss ein await stehen, weil die Daten benötigt werden
         let users = await database.checkLogin();
         if (username === users.username ) {
@@ -37,7 +37,9 @@ $('#loginBtn').on('click', () => {
         }
     }
 
-    check();
+    check(); */
+
+    database.checkConnection()
 })
 
 // die Funktion wird aufgerufen wenn der Button Cancel gedrückt wird.
