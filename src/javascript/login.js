@@ -5,7 +5,7 @@ const $ = require('jquery');
 const remote = electron.remote;
 
 //Datenbank Import
-const database = require('../database/db');
+let {checkLogin} = require('../database/db');
 
 // die Funktion wird aufgerufen wenn der Button Login gedrückt wird.
 // Die Funktion überprüft, ob der Eingaben von den Input Fields username und password
@@ -22,9 +22,9 @@ $('#loginBtn').on('click', () => {
     // Wichtig:
     // Die Funktion Check muss asynchron sein, weil die Funktion auf die Daten von der Datenbank
     // warten muss. Daher muss mit Aysnc/await gearbeitet werden.
-    /* async function check() {
+    async function check() {
         // Wichtig: Vor database.checkLogin() muss ein await stehen, weil die Daten benötigt werden
-        let users = await database.checkLogin();
+        let users = await checkLogin()
         if (username === users.username ) {
             if (password === users.password) {
                 mainWindow.show();
@@ -37,9 +37,7 @@ $('#loginBtn').on('click', () => {
         }
     }
 
-    check(); */
-
-    database.checkConnection()
+    check();
 })
 
 // die Funktion wird aufgerufen wenn der Button Cancel gedrückt wird.
