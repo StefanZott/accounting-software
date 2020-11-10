@@ -1,9 +1,11 @@
 const electron = require('electron');
-const {dialog} = require('electron').remote;
-const $ = require('jquery');
 const remote = electron.remote;
+const dialog = remote.dialog;
+const $ = require('jquery');
 
-let messageDialog;
+let {addUserInDB} = require('../database/db');
+
+let checkInput;
 
 
 // Registrationsdaten werden übergeben
@@ -24,24 +26,26 @@ $('#registrationBtn').on('click', () => {
     //prüft ob Registrierungsdaten vollständig sind
     for (key in registrationData) {
         if (registrationData[key] !== "") {
-            messageDialog = true;
+            checkInput = true;
         } else {
-            messageDialog = false;
+            checkInput = false;
             break;
         }
     }
     
     //Anzeige der Messagebox
-    if (messageDialog) {
-        dialog.showMessageBox({message : 'Daten wurden übertragen'});
+    if (checkInput) {
+        addUserInDB(registrationData);
+        remote.getCurrentWindow().close()
     } else {
-        dialog.showErrorBox('Error', 'fehlende Eingabe');
+        dialog.showMessageBox({message: 'fehlende Eingabe', title: 'Info', type: 'info'})
     }
+
+    
 
 });
 
 //schliesst Registrationsfenster und kehrt zum Login zurück
 $('#returnLoginBtn').on('click', () => {
-    let window = remote.getCurrentWindow();
-    window.close();
+    remote.getCurrentWindow().close();
 })

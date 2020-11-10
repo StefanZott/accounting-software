@@ -1,13 +1,13 @@
-const { dialog } = require('electron');
+const electron = require('electron');
+const remote = electron.remote;
 const mysql = require('mysql');
 
-const connection = mysql.createConnection({
-    host: 'db4free.net',
-    user: 'newgeneration',
-    password: 'NewGeneration2020',
-    database: 'accounting_soft',
-    port: 3306
-})
+const config = require('./db_config')
+const connection = config.connection;
+
+let {addAndCheckLogin} = require('../components/database/addAndCheckLogin');
+let {addAndCheckPlace} = require('../components/database/addAndCheckPlace');
+let {addUserInformation} = require('../components/database/addUserInformation');
 
 // Mit checkLogin werden die Daten von der Relation logindata abgerufen.
 // Wichtig: 
@@ -16,22 +16,34 @@ async function checkLogin() {
     let users;
 
     await new Promise((resolve,reject) => {
-        connection.connect();
-        connection.query('SELECT * FROM loginData', (error,results,fields) => {
-            if(error) throw error;
-                resolve(results[0]);
-            })
-        connection.end();
+        connection.query('SELECT * FROM table_login', (error,results,fields) => {
+            (error) ? dialog.showMessageBox({message: error.message, title: 'Datenbank', type: 'error'}) : null;
+            resolve(results[0]);       
+        })
     }).then(user => {
         users = user
         }
     ).catch(error => {
-        dialog.showErrorBox('Datenbank' , error)
+        // dialog.showMessageBox({message: error, title: 'Datenbank', type: 'error'})
     })
 
     return await users;
 }
 
+// Überprüfe die Daten vom User, ob sie in der Datenbank vorhanden sind
+async function addUserInDB(user) {
+    let existUser = await addAndCheckLogin(user.username, user.password);
+   
+    if (existUser) {
+
+    } else {
+        await addAndCheckPlace(user.postcode, user.place);
+        await addUserInformation(user);
+        dialog.showMessageBox({message: 'Du wurdest erfolgreich angelegt', title: '', type: 'info'});
+    }
+}
+
 module.exports={
-    checkLogin
+    checkLogin,
+    addUserInDB
 }
