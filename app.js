@@ -7,7 +7,7 @@ function createWindows() {
   const mainWindow = new BrowserWindow({
     width: screen.getPrimaryDisplay().size.width,
     height: screen.getPrimaryDisplay().size.height,
-    show: true,
+    show: false,
     webPreferences: {
       // Aktiviert die Fähigkeit Node.js für diesen BrowserWindow. Default: false
       nodeIntegration: true,
@@ -24,7 +24,7 @@ function createWindows() {
     height: 300,
     // Gibt dem Window permanenten Focus
     modal: true,
-    show: false,
+    show: true,
     // Damit wird die Titlebar ausgeblendet
     frame: false,
     parent: mainWindow,
