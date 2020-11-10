@@ -23,14 +23,31 @@ $('#loginBtn').on('click', () => {
     // Die Funktion Check muss asynchron sein, weil die Funktion auf die Daten von der Datenbank
     // warten muss. Daher muss mit Aysnc/await gearbeitet werden.
     async function check() {
+        let foundUsername = false;
+        let foundPassword = false;
+
         // Wichtig: Vor database.checkLogin() muss ein await stehen, weil die Daten benötigt werden
         let users = await checkLogin()
-        if (username === users.username ) {
-            if (password === users.password) {
-                mainWindow.show();
-                loginWindow.close();
-            } else {
-                dialog.showErrorBox('Login' , 'Das Passwort ist falsch');    
+
+        for (let index = 0; index < users.length; index++) {
+            if (username === users[index]['username'] ) {
+                foundUsername = true;
+                break;
+            }
+        }
+
+        if (foundUsername) {
+            for (let index = 0; index < users.length; index++) {
+                if (password === users[index]['password']) {
+                    mainWindow.show();
+                    loginWindow.close();
+                    foundPassword = true;
+                    break;
+                }
+            }
+
+            if (!foundPassword) {
+                dialog.showErrorBox('Login' , 'Das Passwort ist falsch'); 
             }
         } else {
             dialog.showErrorBox('Login' , 'Der Benutzername ist falsch');

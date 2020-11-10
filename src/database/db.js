@@ -18,7 +18,7 @@ async function checkLogin() {
     await new Promise((resolve,reject) => {
         connection.query('SELECT * FROM table_login', (error,results,fields) => {
             (error) ? dialog.showMessageBox({message: error.message, title: 'Datenbank', type: 'error'}) : null;
-            resolve(results[0]);       
+            resolve(results);       
         })
     }).then(user => {
         users = user
