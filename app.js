@@ -1,9 +1,11 @@
 const { win, BrowserWindow, app, screen } = require('electron');
 const path = require('path');
-const { electron } = require('process');
+const {electron}  = require('process');
+
+global.mainWindow = null
 
 function createWindows() {
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: screen.getPrimaryDisplay().size.width,
     height: screen.getPrimaryDisplay().size.height,
     show: false,
@@ -15,6 +17,7 @@ function createWindows() {
     }
   })
   // Wird die Standard Menüleiste von Electron ausgeblendet
+  mainWindow.webContents.openDevTools();
   mainWindow.setMenu(null);
   mainWindow.loadFile('./src/html/main.html');
 
@@ -39,6 +42,7 @@ function createWindows() {
   loginWindow.setMenu(null);
   loginWindow.webContents.openDevTools()
   loginWindow.loadFile('./src/html/login.html');
+
 }
 
 app.whenReady()

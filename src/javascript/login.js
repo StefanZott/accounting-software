@@ -5,7 +5,7 @@ const $ = require('jquery');
 const remote = electron.remote;
 
 //Datenbank Import
-let {checkLogin} = require('../database/db');
+let {checkLogin,getConnection} = require('../database/db');
 
 // die Funktion wird aufgerufen wenn der Button Login gedrückt wird.
 // Die Funktion überprüft, ob der Eingaben von den Input Fields username und password
@@ -14,7 +14,7 @@ let {checkLogin} = require('../database/db');
 $('#loginBtn').on('click', () => {
     let window = remote.BrowserWindow.getAllWindows();
     let loginWindow = window[0];
-    let mainWindow = window[1];
+    let mainWindow = remote.getGlobal('mainWindow');
     let username = $('#username').val();
     let password = $('#password').val();
 
@@ -25,6 +25,7 @@ $('#loginBtn').on('click', () => {
     async function check() {
         let foundUsername = false;
         let foundPassword = false;
+        let connection = await getConnection();
 
         // Wichtig: Vor database.checkLogin() muss ein await stehen, weil die Daten benötigt werden
         let users = await checkLogin()
@@ -40,8 +41,13 @@ $('#loginBtn').on('click', () => {
             for (let index = 0; index < users.length; index++) {
                 if (password === users[index]['password']) {
                     mainWindow.show();
-                    loginWindow.close();
                     foundPassword = true;
+                
+                    mainWindow.webContents.send('username' , username)
+                    mainWindow.webContents.send('checkConnection' , connection)
+
+                    loginWindow.close();
+
                     break;
                 }
             }
@@ -55,6 +61,7 @@ $('#loginBtn').on('click', () => {
     }
 
     check();
+
 })
 
 // die Funktion wird aufgerufen wenn der Button Cancel gedrückt wird.
@@ -69,6 +76,7 @@ $('#cancelBtn').on('click', () => {
 })
 
 $('#registrationBtn').on('click', () => {
+
     const registrationWindow = new BrowserWindow({
         width: 400,
         height: 600,
@@ -82,7 +90,7 @@ $('#registrationBtn').on('click', () => {
           // Erlaubt die Kommunikation zwischen dem renderer process und main process. Default: false
           enableRemoteModule: true
         }
-      })  
+      }) 
     
       // Wird die Standard Menüleiste von Electron ausgeblendet
       registrationWindow.setMenu(null);
