@@ -9,6 +9,24 @@ let {addAndCheckLogin} = require('../components/database/addAndCheckLogin');
 let {addAndCheckPlace} = require('../components/database/addAndCheckPlace');
 let {addUserInformation} = require('../components/database/addUserInformation');
 
+async function getConnection() {
+    let connected;
+
+    await new Promise((resolve,reject) => {
+        connection.connect((error) => {
+            if (error) {
+                resolve(false)
+            } else {
+                resolve(true)
+            }
+        })
+    }).then(result => {
+        connected = result
+    })
+
+    return await connected;
+}
+
 // Mit checkLogin werden die Daten von der Relation logindata abgerufen.
 // Wichtig: 
 // Da es sich wieder um eineasynchrone Funktion handelt, muss vor jedem Aufruf ein awiat stehen.
@@ -44,6 +62,7 @@ async function addUserInDB(user) {
 }
 
 module.exports={
+    getConnection,
     checkLogin,
     addUserInDB
 }
