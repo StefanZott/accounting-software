@@ -1,23 +1,22 @@
-const electron = require('electron');
-const remote = electron.remote;
-const mysql = require('mysql');
-
+// eigene Imports
 const config = require('./db_config')
-const connection = config.connection;
-
 let {addAndCheckLogin} = require('../components/database/addAndCheckLogin');
 let {addAndCheckPlace} = require('../components/database/addAndCheckPlace');
 let {addUserInformation} = require('../components/database/addUserInformation');
 
+// Allgemeine Variablen
+const connection = config.connection;
+
+// Überprüft die Connection zu der Datenbank und gibt ein true oder false zurück
 async function getConnection() {
     let connected;
 
     await new Promise((resolve,reject) => {
         connection.connect((error) => {
             if (error) {
-                resolve(false)
-            } else {
                 resolve(true)
+            } else {
+                resolve(false)
             }
         })
     }).then(result => {
@@ -42,7 +41,7 @@ async function checkLogin() {
         users = user
         }
     ).catch(error => {
-        // dialog.showMessageBox({message: error, title: 'Datenbank', type: 'error'})
+        dialog.showMessageBox({message: error, title: 'Datenbank', type: 'error'})
     })
 
     return await users;
@@ -61,8 +60,31 @@ async function addUserInDB(user) {
     }
 }
 
+// Überprüft ob die Kategorie schon angelegt ist, wenn nicht wird sie der Datenbank
+// hinzugefügt.
+async function addCategorieInDatabase(categorie) {
+    let result;
+
+    await new Promise((resolve,reject) => {
+        connection.query("SELECT * FROM table_categorie WHERE name = '" + categorie + "'", (err,results,fields) => {
+            console.log(results.length)
+            if(results.length <= 0) {
+                connection.query("INSERT INTO table_categorie(name) VALUES ('" + categorie + "')");
+                resolve(true)
+            } else {
+                resolve(false)
+            } 
+        }); 
+    }).then(results => {
+        result = results;
+    })
+
+    return await result;
+}
+
 module.exports={
     getConnection,
     checkLogin,
-    addUserInDB
+    addUserInDB,
+    addCategorieInDatabase
 }

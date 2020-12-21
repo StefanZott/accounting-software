@@ -1,7 +1,6 @@
 html, body {
-    height: 98%;
+    height: 99%;
 }
-
 
 /* Scrollbar deaktivieren */
 ::-webkit-scrollbar {
@@ -9,7 +8,11 @@ html, body {
 }
 
 body {
+    margin: 0;
+    padding: 0;
     background-color: black;
+    border: 4px solid blue;
+    border-radius: 10px;
 }
 
 #root {

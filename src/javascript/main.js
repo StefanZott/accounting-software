@@ -1,8 +1,5 @@
-const electron = require('electron');
-const {dialog} = require('electron').remote;
-const BrowserWindow = electron.remote.BrowserWindow;
+// wichtige Imports
 const $ = require('jquery');
-const remote = electron.remote;
 const {ipcRenderer} = require('electron');
 
 // Content Aufrufe
@@ -26,11 +23,14 @@ $('#content4').on('click' , () => {
     $('#contentContainer').load('../html/content4.html');
 })
 
+// Der Gegenpart ist in der login.js Zeile 46
 ipcRenderer.on('username', (event,username) => {
     $('#name').html(username);
 })
 
+// Der Gegenpart ist in der login.js Zeile 47
 ipcRenderer.on('checkConnection', (event,getConnection) => {
+    console.log(getConnection)
     if (getConnection) {
         $('#dataConnection').css({"background":"rgb(211,238,138)","background":"radial-gradient(circle, rgba(211,238,138,1) 10%, rgba(13,179,63,1) 43%, rgba(4,24,6,1) 100%)"});
     } else {

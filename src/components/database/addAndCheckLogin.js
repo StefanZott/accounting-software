@@ -1,7 +1,3 @@
-const electron = require('electron');
-const remote = electron.remote;
-const mysql = require('mysql');
-
 const config = require('../../database/db_config')
 const connection = config.connection;
 
