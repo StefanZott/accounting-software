@@ -1,8 +1,12 @@
-const { win, BrowserWindow, app, screen } = require('electron');
-const path = require('path');
-const {electron}  = require('process');
+// wichtige Imports
+const { BrowserWindow, app, screen, Menu} = require('electron');
 
+// Globale Window
 global.mainWindow = null
+global.loginWindow = null;
+
+// eigene Imports
+const {createMenu} = require('./src/components/window/menu')
 
 function createWindows() {
   mainWindow = new BrowserWindow({
@@ -17,19 +21,21 @@ function createWindows() {
     }
   })
   // Wird die Standard Menüleiste von Electron ausgeblendet
-  mainWindow.webContents.openDevTools();
   mainWindow.setMenu(null);
   mainWindow.loadFile('./src/html/main.html');
+  Menu.setApplicationMenu(createMenu());
 
-  const loginWindow = new BrowserWindow({
+  loginWindow = new BrowserWindow({
     width: 400,
-    height: 300,
+    height: 400,
     // Gibt dem Window permanenten Focus
     modal: true,
     show: true,
+    resizable: true,
     // Damit wird die Titlebar ausgeblendet
     frame: false,
     parent: mainWindow,
+    transparent: true,
     webPreferences: {
       // Aktiviert die Fähigkeit Node.js für diesen BrowserWindow. Default: false
       nodeIntegration: true,
@@ -40,9 +46,7 @@ function createWindows() {
 
   // Wird die Standard Menüleiste von Electron ausgeblendet
   loginWindow.setMenu(null);
-  loginWindow.webContents.openDevTools()
   loginWindow.loadFile('./src/html/login.html');
-
 }
 
 app.whenReady()
