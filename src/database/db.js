@@ -3,6 +3,8 @@ const config = require('./db_config')
 let {addAndCheckLogin} = require('../components/database/addAndCheckLogin');
 let {addAndCheckPlace} = require('../components/database/addAndCheckPlace');
 let {addUserInformation} = require('../components/database/addUserInformation');
+let {getCategorieID} = require('../components/database/getCategorieID');
+let {getSubCategorieID} = require('../components/database/getSubCategorieID');
 
 // Allgemeine Variablen
 const connection = config.connection;
@@ -82,9 +84,40 @@ async function addCategorieInDatabase(categorie) {
     return await result;
 }
 
+async function getAllCategorie() {
+    let array;
+
+    await new Promise((resolve,reject) => {
+        connection.query("SELECT * FROM table_categorie", (err,results,fields) => {
+            resolve(results);
+        })
+    }).then(result => {
+        array = result; 
+    })
+
+    return await array;
+}
+
+async function createRecordAndAddInDatabase(categorieName , subCategorieName) {
+    let idFromCategorie = await getCategorieID(categorieName);
+
+    await connection.query("INSERT INTO table_sub_categorie(name) VALUES ('" + subCategorieName + "')");
+
+    let idFromSubCategorie = await getSubCategorieID(subCategorieName);
+
+    if (categorieName.length > 0 && subCategorieName.length > 0) {
+            await connection.query("INSERT INTO table_help_categorie(CID,ScID) VALUES ("+ idFromCategorie + " , " + idFromSubCategorie + ")");
+            return true;
+    }
+
+    return false;
+}
+
 module.exports={
     getConnection,
     checkLogin,
     addUserInDB,
-    addCategorieInDatabase
+    addCategorieInDatabase,
+    getAllCategorie,
+    createRecordAndAddInDatabase
 }
