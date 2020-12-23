@@ -6,6 +6,7 @@ let WindowManager = require('./windowManager');
 
 // Globale BrowserWindow
 global.categorieWindow = null;
+global.subCategorieWindow = null;
 
 function createMenu() {
     let mainMenu = Menu.buildFromTemplate([
@@ -31,11 +32,17 @@ function createMenu() {
                 {
                     label: 'Neue Kategorie anlegen',
                     click: () => {
-                        w = new WindowManager('./src/html/categorie.html', 400 ,300);
-                        w.createFramelessModalWindow();
+                        categorieWindow = new WindowManager('./src/html/categorie.html', 400 ,300);
+                        categorieWindow.createFramelessModalWindow();
                     }
                 },
-                {label: 'Neue Unterkategorie anlegen'}
+                {
+                    label: 'Neue Unterkategorie anlegen',
+                    click: () => {
+                        subCategorieWindow = new WindowManager('./src/html/subCategorie.html', 400, 300);
+                        subCategorieWindow.createFramelessModalWindow();
+                    }
+                }
             ]
         },
         {
