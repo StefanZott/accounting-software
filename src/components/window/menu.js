@@ -7,6 +7,7 @@ let WindowManager = require('./windowManager');
 // Globale BrowserWindow
 global.categorieWindow = null;
 global.subCategorieWindow = null;
+global.aboutWindow = null;
 
 function createMenu() {
     let mainMenu = Menu.buildFromTemplate([
@@ -46,7 +47,16 @@ function createMenu() {
             ]
         },
         {
-            label: 'Hilfe'
+            label: 'Hilfe',
+            submenu: [
+                {
+                    label: 'Über',
+                    click: () => {
+                        aboutWindow = new WindowManager('./src/html/about.html', 400, 300);
+                        aboutWindow.createFramelessModalWindow();
+                    }   
+                }
+            ]
         }
     ])
 

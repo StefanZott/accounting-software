@@ -15,7 +15,7 @@ let categorieName;
     |                                   addCategorieBtn                             |
     |_______________________________________________________________________________|
 */
-$('#addCategorieBtn').on('click', () => {;
+$('#addCategorieBtn').on('click', () => {
     addInTableCategorie();
 });
 
